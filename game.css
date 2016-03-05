@@ -1,0 +1,14 @@
+.box {
+    width: 500px;
+    height: 500px;
+    position: relative;
+}
+
+.left {
+    float: left
+}
+
+.right {
+    float: left;
+    border-left: 1px solid black;
+}
