@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Matching Game</title>
+
+    <style>
+        .box {
+            width: 500px;
+            height: 500px;
+            position: relative;
+        }
+
+        .left {
+            float: left
+        }
+
+        .right {
+            float: left;
+            border-left: 1px solid black;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var numberOfFaces = 5;
+
+        function cleareBoard(board) {
+            while (board.firstChild) {
+                board.removeChild(board.firstChild);
+            }
+        }
+        function generateFaces() {
+
+            var theLeftSide = document.getElementById("leftSide");
+            var theRightSide = document.getElementById("rightSide");
+            var theLeftSideImages;
+
+            for (var i = 1; i <= numberOfFaces; i++) {
+                var img = document.createElement("img");
+                img.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+                img.style.position = "absolute";
+                img.style.top = Math.floor(Math.random() * 400) + "px";
+                img.style.left = Math.floor(Math.random() * 400) + "px";
+
+                theLeftSide.appendChild(img);
+
+                if (i < numberOfFaces) {
+                    theLeftSideImages = img.cloneNode(true);
+                    theRightSide.appendChild(theLeftSideImages);
+                }
+            }
+
+            theLeftSide.lastChild.onclick = function nextLevel(event) {
+                event.stopPropagation();
+                numberOfFaces += 5;
+                theLeftSide.lastChild.onclick = null;
+                cleareBoard(theLeftSide);
+                cleareBoard(theRightSide);
+                generateFaces();
+            };
+
+            document.body.onclick = function gameOver() {
+                alert("Game Over!");
+                document.body.onclick = null;
+                theLeftSide.lastChild.onclick = null;
+            };
+        }
+
+
+    </script>
+
+</head>
+
+<body onload="generateFaces()">
+
+<h3>Matching Game</h3>
+
+<p>Click on the extra smiling face on the left.</p>
+
+<div class="container">
+    <div id="leftSide" class="box left"></div>
+    <div id="rightSide" class="box right"></div>
+</div>
+
+</body>
+</html>
